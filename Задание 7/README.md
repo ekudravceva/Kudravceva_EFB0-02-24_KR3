@@ -46,18 +46,18 @@ uvicorn main:app --reload --port 8000
 
 ### Аутентификация
 
-POST - `/register` - Регистрация нового пользователя (Все)
-POST - `/login` - Вход и получение JWT токена (Все) 
+- POST - `/register` - Регистрация нового пользователя (Все)
+- POST - `/login` - Вход и получение JWT токена (Все) 
 
 ### Ресурсы (CRUD)
 
-GET - `/resources` - Получить список всех ресурсов (admin, user, guest)
-GET - `/resources/{id}` - Получить ресурс по ID (admin, user, guest)
-POST - `/resources` - Создать новый ресурс (admin, user)
-PUT - `/resources/{id}` - Обновить ресурс (admin (любой ресурс), user (только свой))
-DELETE - `/resources/{id}` - Удалить ресурс (admin (любой ресурс), user (только свой))
+- GET - `/resources` - Получить список всех ресурсов (admin, user, guest)
+- GET - `/resources/{id}` - Получить ресурс по ID (admin, user, guest)
+- POST - `/resources` - Создать новый ресурс (admin, user)
+- PUT - `/resources/{id}` - Обновить ресурс (admin (любой ресурс), user (только свой))
+- DELETE - `/resources/{id}` - Удалить ресурс (admin (любой ресурс), user (только свой))
 
 ### Администрирование
 
-GET - `/admin/users` - Получить список всех пользователей (Только admin)
-DELETE - `/admin/users/{username}` - Удалить пользователя (Только admin)
+- GET - `/admin/users` - Получить список всех пользователей (Только admin)
+- DELETE - `/admin/users/{username}` - Удалить пользователя (Только admin)
