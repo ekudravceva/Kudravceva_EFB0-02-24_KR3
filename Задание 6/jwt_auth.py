@@ -1,26 +1,32 @@
-# jwt_auth.py
-
 import jwt
+import secrets
 from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from database import get_user, verify_password
+from database import get_user, verify_password, user_exists
 
 security = HTTPBearer()
 
-def authenticate_user(username: str, password: str) -> bool:
+def authenticate_user(username: str, password: str) -> dict | None:
     """
     Проверяет учетные данные пользователя.
-    Возвращает True если данные верны, иначе False.
+    Возвращает словарь с данными пользователя или None.
     """
+    # Используем secrets.compare_digest для поиска пользователя
+    if not user_exists(username):
+        return None
+    
     user = get_user(username)
     if not user:
-        return False
-    return verify_password(password, user.hashed_password)
+        return None
+    
+    if not verify_password(password, user.hashed_password):
+        return None
+    
+    return {"username": user.username}
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
-    """Создает JWT токен"""
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
@@ -31,7 +37,6 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Проверяет JWT токен из заголовка Authorization"""
     token = credentials.credentials
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

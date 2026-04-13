@@ -8,9 +8,7 @@ docs_security = HTTPBasic()
 def verify_docs_access(credentials: HTTPBasicCredentials = Depends(docs_security)):
     """
     Проверяет доступ к документации в DEV режиме.
-    Использует secrets.compare_digest для защиты от тайминг-атак.
     """
-
     username_correct = secrets.compare_digest(
         credentials.username.encode('utf-8'),
         DOCS_USER.encode('utf-8')
