@@ -1,8 +1,9 @@
 import sqlite3
 
-DATABASE_NAME = "users.db"
+USERS_DATABASE = "users.db"
+TODOS_DATABASE = "todos.db"
 
-def get_db_connection():
-    conn = sqlite3.connect(DATABASE_NAME)
+def get_db_connection(db_name):
+    conn = sqlite3.connect(db_name)
     conn.row_factory = sqlite3.Row
     return conn
