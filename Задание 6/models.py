@@ -10,3 +10,11 @@ class UserInDB(UserBase):
     hashed_password: str
 
 User = UserCreate
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
