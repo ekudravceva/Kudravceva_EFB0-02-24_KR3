@@ -57,6 +57,10 @@ uvicorn main:app --reload --port 8000
 - PUT - `/resources/{id}` - Обновить ресурс (admin (любой ресурс), user (только свой))
 - DELETE - `/resources/{id}` - Удалить ресурс (admin (любой ресурс), user (только свой))
 
+## Защищенные ресурсы
+
+- GET - `/protected_resource` - Тестовый защищенный ресурс (admin, user)
+
 ### Администрирование
 
 - GET - `/admin/users` - Получить список всех пользователей (Только admin)

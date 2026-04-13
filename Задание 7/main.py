@@ -164,6 +164,18 @@ async def delete_resource(resource_id: int, current_user: dict = Depends(require
                 )
     raise HTTPException(status_code=404, detail="Resource not found")
 
+# тестовый защищенный ресурс
+@app.get("/protected_resource")
+async def protected_resource(current_user: dict = Depends(require_role(["admin", "user"]))):
+    """
+    Защищенный ресурс. Доступен только для admin и user. Guest не имеет доступа.
+    """
+    return {
+        "message": "Access granted to protected resource",
+        "user": current_user["username"],
+        "role": current_user["role"]
+    }
+
 # эндпоинты админа
 
 @app.get("/admin/users", response_model=List[UserResponse])
